@@ -15,6 +15,7 @@ const initialState = {
   user: { name: null, email: null },
   token: null,
   isLoggedIn: false,
+  isRegister: false,
   isRefreshing: false,
   error: null,
 };
@@ -26,9 +27,10 @@ const authSlice = createSlice({
     [register.pending]: handlePending,
     [register.fulfilled](state, action) {
       state.isRefreshing = false;
-      state.user = action.payload.user;
-      state.token = action.payload.token;
-      state.isLoggedIn = true;
+      state.user = { name: null, email: null };
+      state.isRegister = true;
+      state.token = null;
+      state.isLoggedIn = false;
       state.error = null;
     },
     [register.rejected]: handleRejected,
@@ -38,6 +40,7 @@ const authSlice = createSlice({
       state.user = action.payload.user;
       state.token = action.payload.token;
       state.isLoggedIn = true;
+      state.isRgister = false;
       state.error = null;
     },
     [logIn.rejected]: handleRejected,
